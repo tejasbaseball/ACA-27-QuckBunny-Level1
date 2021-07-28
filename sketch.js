@@ -100,7 +100,7 @@ function generateSnakes()
 {
   if(frameCount%30===0)
   {
-    var snake=createSprite(random(50,500),random(260,390),random(30,80),5);
+    var snake=createSprite(random(50,500),random(50,500),random(30,80),5);
     snake.shapeColor="yellow";
     snake.velocityX=random(-5,5);
     snakeGroup.add(snake);
