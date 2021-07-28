@@ -1,9 +1,11 @@
 var player;
 var target;
 var edges;
+var snakeGroup;
 function setup() {
   createCanvas(600,600);
   edges=createEdgeSprites();
+  snakeGroup=new Group();
   player=createSprite(40,560,20,20);
   target=createSprite(560,40,40,40);
   player.shapeColor="white";
@@ -24,7 +26,6 @@ function setup() {
 
 function draw() {
   background("green");  
-  drawSprites();
   player.bounceOff(edges[0]);
   player.bounceOff(edges[1]);
   player.bounceOff(edges[2]);
@@ -78,5 +79,30 @@ function draw() {
   {
     player.x=40;
     player.y=560;
+  }
+  generateSnakes();
+  for(var i=0;i<(snakeGroup).length;i++)
+  {
+    var temp=snakeGroup.get(i);
+    if(player.isTouching(temp))
+    {
+      player.x=40;
+      player.y=560;
+    }
+    if(temp.isTouching(edges[0])||temp.isTouching(edges[1])||temp.isTouching(edges[2])||temp.isTouching(edges[3]))
+    {
+      temp.destroy();
+    }
+  }
+  drawSprites();
+}
+function generateSnakes()
+{
+  if(frameCount%30===0)
+  {
+    var snake=createSprite(random(50,500),random(260,390),random(30,80),5);
+    snake.shapeColor="yellow";
+    snake.velocityX=random(-5,5);
+    snakeGroup.add(snake);
   }
 }
