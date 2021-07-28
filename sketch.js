@@ -2,12 +2,23 @@ var player;
 var target;
 var edges;
 var snakeGroup;
+function preload()
+{
+  bg=loadImage("bg.png");
+  carrot=loadImage("carrot.png");
+  bunnyImg=loadImage("bunnyImg.png");
+  snakeImage=loadImage("snake.png");
+}
 function setup() {
   createCanvas(600,600);
   edges=createEdgeSprites();
   snakeGroup=new Group();
-  player=createSprite(40,560,20,20);
-  target=createSprite(560,40,40,40);
+  player=createSprite(40,560);
+  player.addImage(bunnyImg);
+  player.scale=0.15;
+  target=createSprite(560,40);
+  target.scale=0.2;
+  target.addImage(carrot);
   player.shapeColor="white";
   target.shapeColor="pink";
   obs1=createSprite(300,250,150,20);
@@ -25,7 +36,8 @@ function setup() {
 }
 
 function draw() {
-  background("green");  
+  background(bg);  
+  stroke("blue");
   player.bounceOff(edges[0]);
   player.bounceOff(edges[1]);
   player.bounceOff(edges[2]);
@@ -48,6 +60,7 @@ function draw() {
   }
   if(player.isTouching(target))
   {
+    textSize(20);
     text("YOU WIN!", 300,300);
   }
   if(player.isTouching(obs1))
@@ -101,6 +114,8 @@ function generateSnakes()
   if(frameCount%30===0)
   {
     var snake=createSprite(random(50,500),random(50,500),random(30,80),5);
+    snake.scale=random(0.1,0.3);
+    snake.addImage(snakeImage);
     snake.shapeColor="yellow";
     snake.velocityX=random(-5,5);
     snakeGroup.add(snake);
